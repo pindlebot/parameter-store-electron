@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="select.css" rel="stylesheet" />
+  <style>
+
+  .gradient {
+    box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+    transition-property: color,background-color,box-shadow,transform;
+    transition-duration: .15s;
+  }
+  
+  .gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 35px rgba(50,50,93,.1), 0 8px 15px rgba(0,0,0,.07);
+  }  
+  .copy.hide-opacity{
+    opacity: 0;
+  } 
+
+  .copy {
+    color: #FFFFFF;
+    text-align: center;
+
+    -webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -ms-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+    opacity: 1;
+  }
+
+  @keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  .fadeOut {
+    animation-name: fadeOut;
+  }
+
+  .animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  }
+
+  .animated.infinite {
+    animation-iteration-count: infinite;
+  }
+
+  .animated.hinge {
+    animation-duration: 2s;
+  }
+
+  .animated.flipOutX,
+  .animated.flipOutY,
+  .animated.bounceIn,
+  .animated.bounceOut {
+    animation-duration: .75s;
+  }
+
+  .namespace-select .Select-menu-outer {
+    top: auto;
+    bottom: 100%;
+  }
+
+    </style>
+</head>
+<body style="margin: 0; padding: 0; height: 100%;">
+  <div id="App" style="height: 100%;"></div>
+</body>
+
+<script type="text/jsx">
+require('./render.js')
+</script>
+</html>
