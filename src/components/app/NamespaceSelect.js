@@ -42,7 +42,7 @@ class NamespaceSelect extends React.Component {
     }
     const options = get(this.props.namespace, ['options'], [])
 
-    const { selected } = this.props.namespace
+    const selected = get(this.props.namespace, ['selected'], { label: 'All', value: 'All'})
     return(
 
       <Select.Creatable

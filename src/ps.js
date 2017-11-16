@@ -13,6 +13,17 @@ function ps(params) {
   const scope = {
     ...params
   }
+
+  scope.auth = () => {
+    return new Promise((resolve,reject) => {
+      AWS.config.getCredentials((err) => {
+        if (err) {
+          reject(err.stack)
+        }
+        resolve(AWS.config.credentials)
+      })
+    })
+  }
   
   scope.get = () => {
     let name = scope.key

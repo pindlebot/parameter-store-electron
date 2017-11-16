@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import debounce from 'debounce';
 import configureStore from './store/configureStore'; 
-import { REVEAL_VALUE, SET_PARAMETERS, SET_NAMESPACES } from './actions/index';
+import { 
+  REVEAL_VALUE, 
+  SET_PARAMETERS, 
+  SET_NAMESPACES,
+  CONFIG_ERROR 
+} from './actions/index';
 
 const initialState = {
   namespace: {
     options: [],
-    selected: { key: '', value: '' }
+    selected: { key: 'All', value: 'All' }
   },
   parameters: []
 }
@@ -33,6 +38,15 @@ if (module.hot) {
 }
 
   const saveState = debounce(() => {
+    let state = store.getState()
+    state = {
+      ...state,
+      config: {
+        ...state.config,
+        error: null
+      }
+    }
+
     localStorage.setItem('state', JSON.stringify(store.getState()))
   }, 5000);
   
@@ -54,6 +68,13 @@ if (module.hot) {
     })
   })
 
+  ipc.on('error', (event, args) => {
+    store.dispatch({
+      type: CONFIG_ERROR,
+      error: JSON.parse(args)
+    })
+  })
+
   ipc.on('init', (event, args) => {
     const namespaces = [...new Set(
       JSON.parse(args).filter(arg => 
@@ -61,7 +82,10 @@ if (module.hot) {
       ).map(arg => 
         arg.key.split('/')[1]
       )
+      .filter(arg => typeof arg !== 'undefined')
     )]
+
+    namespaces.push('All')
     
     store.dispatch({
       type: SET_PARAMETERS,

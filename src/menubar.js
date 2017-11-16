@@ -15,20 +15,28 @@ mb.on('ready', function ready () {
   // your app code here
 });
 
+const initData = (webContents) => {
+  ps().list().then(data => {
+    webContents.send('init', JSON.stringify([
+      ...data.Parameters.map(p => ({
+        key: p.Name, 
+        id: Math.random().toString(36).substr(2, 9)
+      }))
+    ]))
+  })
+}
+
 mb.on('after-create-window', () => {
   let { webContents } = mb.window
   
   if(isDevMode) webContents.openDevTools()
 
   webContents.on('dom-ready', () => {
-    console.log('new-window')
-    ps().list().then(data => {
-      webContents.send('init', JSON.stringify([
-        ...data.Parameters.map(p => ({
-          key: p.Name, 
-          id: Math.random().toString(36).substr(2, 9)
-        }))
-      ]))
+    ps().auth().then(() => {
+     initData(webContents)
+    }).catch(error => {
+      console.log(error)
+      webContents.send('error', JSON.stringify({error}))
     })
   })
 })

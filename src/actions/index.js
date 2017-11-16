@@ -8,7 +8,7 @@ export const ADD_NAMESPACE = 'ADD_NAMESPACE'
 export const SET_NAMESPACE = 'SET_NAMESPACE'
 export const SET_NAMESPACES = 'SET_NAMESPACES'
 export const DESTROY_NAMESPACE = 'DESTROY_NAMESPACE'
-
+export const CONFIG_ERROR = 'CONFIG_ERROR'
 
 export function addParameter(parameter) {
   return {
@@ -71,5 +71,12 @@ export function destroyNamespace(namespace) {
   return {
     type: DESTROY_NAMESPACE,
     namespace
+  }
+}
+
+export function configError(error) {
+  return {
+    type: CONFIG_ERROR,
+    error
   }
 }

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import * as actions from '../actions';
+import { CONFIG_ERROR } from '../actions';
 
 const findIndex = require('lodash.findindex')
 
@@ -76,7 +77,20 @@ const optionsReducer = (state = initialState, action) => {
   }
 }
 
+const configReducer = (state = {}, action) => {
+  switch(action.type) {
+    case CONFIG_ERROR:
+      return {
+        ...state,
+        error: action.error
+      }
+    default: 
+      return state;
+  }
+}
+
 export default combineReducers({
   parameters: parametersReducer,
-  namespace: optionsReducer
+  namespace: optionsReducer, 
+  config: configReducer
 })

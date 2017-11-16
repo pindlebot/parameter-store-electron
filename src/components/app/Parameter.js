@@ -43,8 +43,7 @@ function Parameter (props) {
               display: 'flex',
               flexDirection: 'row',
             }}>
-            <div>{splitParam(param.key).name}</div>
-            <div style={{color: '#999'}}>{splitParam(param.key).namespace}</div>
+            <div>{param.key}</div>
           </div> : <div 
           key={`div4_${param.id}`}
           style={{

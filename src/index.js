@@ -4,7 +4,8 @@ import {
   ipcMain, 
   clipboard,
   Menu,
-  shell
+  shell,
+  autoUpdater
 } from 'electron';
 
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -12,7 +13,9 @@ import { enableLiveReload } from 'electron-compile';
 import ps from './ps'
 import path from 'path'
 import menubar from './menubar'
-
+//var app = require('app');
+var fs = require('fs')
+var os = require('os');
 
 const defaultMenu = require('electron-default-menu');
 
@@ -32,6 +35,16 @@ const createWindow = async () => {
       defaultMenu(app, shell)
     )
   )
+  var platform = os.platform() + '_' + os.arch();  // usually returns darwin_64
+  var version = app.getVersion();
+  var url = 'https://nuts-parameter-store.herokuapp.com/update/'+platform+'/'+version
+  
+  // require('./autoupdater')(autoUpdater, url)
+
+  //fs.readFile('~/.aws/config', 'utf8', (err, data) => {
+  //  if(err) console.log(err)
+  //  console.log(data)
+  //})
 };
 
 app.on('ready', createWindow);
