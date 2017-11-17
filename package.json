@@ -1,7 +1,7 @@
 {
   "name": "parameter-store",
   "productName": "Parameter Store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -65,7 +65,8 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "react-select": "^1.0.0-rc.10",
     "redux": "^3.7.2",
-    "utf8": "^2.1.2"
+    "utf8": "^2.1.2",
+    "util.promisify": "^1.0.0"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

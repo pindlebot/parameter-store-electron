@@ -13,9 +13,11 @@ import { enableLiveReload } from 'electron-compile';
 import ps from './ps'
 import path from 'path'
 import menubar from './menubar'
+import AwsConfig from './AwsConfig'
 //var app = require('app');
 var fs = require('fs')
 var os = require('os');
+var { exec } = require('child_process')
 
 const defaultMenu = require('electron-default-menu');
 
@@ -41,10 +43,7 @@ const createWindow = async () => {
   
   // require('./autoupdater')(autoUpdater, url)
 
-  //fs.readFile('~/.aws/config', 'utf8', (err, data) => {
-  //  if(err) console.log(err)
-  //  console.log(data)
-  //})
+
 };
 
 app.on('ready', createWindow);
@@ -85,4 +84,14 @@ ipcMain.on('get', (event, args) => {
 
 ipcMain.on('copy', (event, text) => {
   clipboard.writeText(text)
+})
+
+ipcMain.on('reload', async (event, args) => {
+  let parameters = await AwsConfig(JSON.parse(args))
+  
+  if(parameters && parameters.length > 0) {
+    event.sender.send('init', JSON.stringify(parameters))
+    event.sender.send('error', JSON.stringify({error: null}))
+  }
+ 
 })

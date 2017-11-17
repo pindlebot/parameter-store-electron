@@ -9,6 +9,7 @@ export const SET_NAMESPACE = 'SET_NAMESPACE'
 export const SET_NAMESPACES = 'SET_NAMESPACES'
 export const DESTROY_NAMESPACE = 'DESTROY_NAMESPACE'
 export const CONFIG_ERROR = 'CONFIG_ERROR'
+export const UPDATE_CONFIG = 'UPDATE_CONFIG'
 
 export function addParameter(parameter) {
   return {
@@ -80,3 +81,8 @@ export function configError(error) {
     error
   }
 }
+
+export const updateConfig = (credentials) => ({
+  type: UPDATE_CONFIG,
+  credentials
+})

@@ -37,63 +37,68 @@ if (module.hot) {
   module.hot.accept(render);
 }
 
-  const saveState = debounce(() => {
-    let state = store.getState()
-    state = {
-      ...state,
-      config: {
-        ...state.config,
-        error: null
-      }
-    }
-
-    localStorage.setItem('state', JSON.stringify(store.getState()))
-  }, 5000);
+const saveState = debounce(() => {
+  let state = store.getState()
   
-  store.subscribe(() => {
-    saveState();
-    render(App);
-    if (process.env.ENV === 'development') {
-      console.log('state', store.getState());
+  state = {
+    ...state,
+    config: {
+      ...state.config,
+      error: null
     }
-  });
+  }
+
+  localStorage.setItem('state', JSON.stringify(store.getState()))
+}, 5000);
   
-  store.dispatch({ type: 'APP_INIT', store });
+store.subscribe(() => {
+  saveState();
+  
+  render(App);
+  
+  if (process.env.ENV === 'development') {
+    console.log('state', store.getState());
+  }
+});
+  
+store.dispatch({ type: 'APP_INIT', store });
 
-  ipc.on('data', (event, args) => {
+ipc.on('data', (event, args) => {
     
-    store.dispatch({
-      type: REVEAL_VALUE, 
-      parameter: JSON.parse(args) 
-    })
+  store.dispatch({
+    type: REVEAL_VALUE, 
+    parameter: JSON.parse(args) 
   })
+})
 
-  ipc.on('error', (event, args) => {
-    store.dispatch({
-      type: CONFIG_ERROR,
-      error: JSON.parse(args)
-    })
+ipc.on('error', (event, args) => {
+  store.dispatch({
+    type: CONFIG_ERROR,
+    error: JSON.parse(args)
   })
+})
 
-  ipc.on('init', (event, args) => {
-    const namespaces = [...new Set(
-      JSON.parse(args).filter(arg => 
-        arg.key.split('/').length > 0
-      ).map(arg => 
-        arg.key.split('/')[1]
-      )
-      .filter(arg => typeof arg !== 'undefined')
-    )]
+ipc.on('init', (event, args) => {
 
-    namespaces.push('All')
+  console.log(args)
+
+  const namespaces = [...new Set(
+    JSON.parse(args).filter(arg => 
+      arg.key.split('/').length > 0
+    ).map(arg => 
+      arg.key.split('/')[1]
+    ).filter(arg => typeof arg !== 'undefined')
+  )]
+
+  namespaces.push('All')
     
-    store.dispatch({
-      type: SET_PARAMETERS,
-      parameters: JSON.parse(args)
-    })
-
-    store.dispatch({
-      type: SET_NAMESPACES,
-      namespaces: namespaces.map(n => ({label: n, value: n}))
-    })
+  store.dispatch({
+    type: SET_PARAMETERS,
+    parameters: JSON.parse(args)
   })
+
+  store.dispatch({
+    type: SET_NAMESPACES,
+    namespaces: namespaces.map(n => ({label: n, value: n}))
+  })
+})

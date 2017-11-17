@@ -2,6 +2,9 @@ import React from 'react'
 import Layout from './Layout'
 import App from './App'
 import styles from '../../styles'
+import * as actions from '../../actions'
+import _ from 'lodash'
+const ipc = require('electron').ipcRenderer;
 
 function Input(props) {
   const {
@@ -38,22 +41,42 @@ class Index extends React.Component {
       }
     }
 
+    this.reload = this.reload.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
+  //componentDidMount() {
+  //  ipc.send('reload', "{}")
+  //}
+
   onChange(e, name) {
-    const { config } = this.state;
-    config[name] = e.target.value
-  
-    this.setState({
-      config
-    })
+    const { config: { credentials } } = this.props.getState()
+    this.props.dispatch(
+      actions.updateConfig({
+        ...credentials,
+        [name]: e.target.value
+      })
+    )
   }
 
-  render() {
-    const { config } = this.state;
+  reload() {
+    const { credentials } = this.props.getState().config
+    ipc.send('reload', JSON.stringify({
+      aws_access_key_id: credentials.accessKeyId,
+      aws_secret_access_key: credentials.secretKey
+    }))
+  }
 
-    if(this.props.getState().config.hasOwnProperty('error')) {
+  render() {    
+    if(_.get(this.props.getState(), ['config', 'error'])) {
+      const credentials = _.get(
+        this.props.getState(), 
+        ['config', 'credentials'], {
+          accessKeyId: '',
+          secretKey: '',
+        }
+      )
+
       return (
         <Layout>
           <div></div>
@@ -63,16 +86,34 @@ class Index extends React.Component {
             padding: '20px'
           }}>
             <Input 
-              value={config.accessKeyId} 
+              value={credentials.accessKeyId} 
               placeholder={'AWS access key ID'} 
               onChange={e => this.onChange(e, 'accessKeyId')}  
             />
             <Input 
-              value={config.secretKey} 
+              value={credentials.secretKey} 
               placeholder={'AWS secret key'} 
               onChange={e => this.onChange(e, 'secretKey')}
             />
+            <button style={{          
+              height: '40px',
+              lineHeight: '40px',
+              padding: '0 14px',
+              boxShadow: '0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08)',
+              background: '#fff',
+              borderRadius: '4px',
+              fontSize: '15px',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '.025em',
+              color: '#6772e5',
+              textDecoration: 'none',
+              transition: 'all .15s ease'
+            }}
+            
+            onClick={this.reload}>Update</button>
           </div>
+
           <div></div>
         </Layout>
       )

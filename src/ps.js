@@ -1,7 +1,4 @@
-const AWS = require('aws-sdk')
-const ssm = new AWS.SSM({
-  region: 'us-east-1'
-})
+
 
 const base64 = require('base-64')
 const utf8 = require('utf8')
@@ -14,11 +11,16 @@ function ps(params) {
     ...params
   }
 
+  const AWS = require('aws-sdk')
+  const ssm = new AWS.SSM({
+    region: 'us-east-1'
+  })
+
   scope.auth = () => {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       AWS.config.getCredentials((err) => {
         if (err) {
-          reject(err.stack)
+          reject(err)
         }
         resolve(AWS.config.credentials)
       })
@@ -74,7 +76,7 @@ function ps(params) {
   scope.list = () => {
     return new Promise((resolve, reject) => {
       ssm.describeParameters({MaxResults: 50}, (err, data) => {
-        if(err) console.log(err)
+        if(err) reject(err)
         resolve(data)
       })
     })

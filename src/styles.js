@@ -48,7 +48,7 @@ export default {
     //display:'flex',
     //flexDirection: 'column',
     //justifyContent: 'space-between',
-    height: '100%',
+    minHeight: '500px',
     display: 'grid', /* 440 */
     gridTemplateRows: '70px auto 70px',
     gridGap: '20px',
