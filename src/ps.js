@@ -1,11 +1,4 @@
 
-
-const base64 = require('base-64')
-const utf8 = require('utf8')
-
-const encode = str => base64.encode(utf8.encode(str))
-const decode = str => base64.decode(utf8.decode(str))
-
 function ps(params) {
   const scope = {
     ...params

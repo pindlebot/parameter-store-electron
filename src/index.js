@@ -42,8 +42,6 @@ const createWindow = async () => {
   var url = 'https://nuts-parameter-store.herokuapp.com/update/'+platform+'/'+version
   
   // require('./autoupdater')(autoUpdater, url)
-
-
 };
 
 app.on('ready', createWindow);
@@ -91,7 +89,8 @@ ipcMain.on('reload', async (event, args) => {
   
   if(parameters && parameters.length > 0) {
     event.sender.send('init', JSON.stringify(parameters))
-    event.sender.send('error', JSON.stringify({error: null}))
+    // event.sender.send('error', JSON.stringify({error: null}))
+    // event.sender.send('pathname', JSON.stringify({pathname: ''}))
   }
  
 })

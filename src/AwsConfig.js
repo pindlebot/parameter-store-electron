@@ -16,7 +16,6 @@ const dirExists = () => {
   return new Promise((resolve, reject) => {
     console.log(dir)
     cp.exec(`[ -d "${dir}" ] && echo true`, (error, stdout, stderr) => {
-      console.log(typeof stdout)
       if(stdout.trim() === "true") {
         resolve(true)
       } else {
@@ -45,7 +44,7 @@ async function AwsConfig (credentials = null) {
   try {
     await read(path.join(dir, 'credentials'))
     const auth = await ps().auth()
-    
+
   } catch(err) {
     
     if(!credentials) {

@@ -93,8 +93,23 @@ const configReducer = (state = {}, action) => {
   }
 }
 
+const pathnameReducer = (state = { pathname: '' }, action) => {
+
+  switch(action.type) {
+    case actions.UPDATE_PATHNAME:
+      return {
+        ...state,
+        ...action.pathname
+      }
+
+    default: 
+      return state;
+  }
+}
+
 export default combineReducers({
   parameters: parametersReducer,
   namespace: optionsReducer, 
-  config: configReducer
+  config: configReducer,
+  path: pathnameReducer  
 })

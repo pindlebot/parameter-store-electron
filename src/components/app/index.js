@@ -45,10 +45,6 @@ class Index extends React.Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  //componentDidMount() {
-  //  ipc.send('reload', "{}")
-  //}
-
   onChange(e, name) {
     const { config: { credentials } } = this.props.getState()
     this.props.dispatch(
@@ -65,10 +61,26 @@ class Index extends React.Component {
       aws_access_key_id: credentials.accessKeyId,
       aws_secret_access_key: credentials.secretKey
     }))
+    this.props.dispatch(
+      actions.updatePathname({
+        pathname: ''
+      })
+    )
+  }
+
+  //getPathname = () => _.get(this.props.getState(), ['path', 'pathname'])
+
+  //getError = () => _.get(this.props.getState(), ['config', 'error']) 
+
+  componentDidMount() {
+  
   }
 
   render() {    
-    if(_.get(this.props.getState(), ['config', 'error'])) {
+    if(
+    //_.get(this.props.getState(), ['config', 'error']) || 
+    _.get(this.props.getState(), ['path', 'pathname']) === 'credentials'
+  ) {
       const credentials = _.get(
         this.props.getState(), 
         ['config', 'credentials'], {
@@ -108,7 +120,10 @@ class Index extends React.Component {
               letterSpacing: '.025em',
               color: '#6772e5',
               textDecoration: 'none',
-              transition: 'all .15s ease'
+              transition: 'all .15s ease',
+              outline: 0,
+              border: 0,
+              cursor: 'pointer'
             }}
             
             onClick={this.reload}>Update</button>

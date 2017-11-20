@@ -3,31 +3,37 @@
     "development": {
       "application/javascript": {
         "presets": [
-          ["env", { "targets": { "electron": "1.6.0" } }],
-          "react"
+          [
+            "/Users/ben/repos/parameter-store/node_modules/babel-preset-env",
+            { "targets": { "electron": "1.6.0" } }
+          ],
+          "/Users/ben/repos/parameter-store/node_modules/babel-preset-react"
         ],
         "plugins": [
-          "transform-async-to-generator", 
-          "transform-es2015-classes", 
-          "transform-class-properties",
-          "react-hot-loader/babel", 
-          "transform-object-rest-spread"
-          ],
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-async-to-generator",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-es2015-classes",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-class-properties",
+          "/Users/ben/repos/parameter-store/node_modules/react-hot-loader/babel",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-object-rest-spread"
+        ],
         "sourceMaps": "inline"
       }
     },
     "production": {
       "application/javascript": {
         "presets": [
-          ["env", { "targets": { "electron": "1.6.0" } }],
-          "react"
+          [
+            "/Users/ben/repos/parameter-store/node_modules/babel-preset-env",
+            { "targets": { "electron": "1.6.0" } }
+          ],
+          "/Users/ben/repos/parameter-store/node_modules/babel-preset-react"
         ],
         "plugins": [
-          "transform-async-to-generator", 
-          "transform-es2015-classes", 
-          "transform-class-properties",
-          "transform-object-rest-spread"
-          ],
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-async-to-generator",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-es2015-classes",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-class-properties",
+          "/Users/ben/repos/parameter-store/node_modules/babel-plugin-transform-object-rest-spread"
+        ],
         "sourceMaps": "none"
       }
     }

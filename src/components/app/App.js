@@ -139,14 +139,12 @@ export default class App extends React.Component {
   }
 
   revealParam (param) {
-    console.log("Reavealing parameter...")
     if(param.value && param.value !== '') {
       this.props.dispatch(
         actions.revealValue({...param, value: ''})  
       )
     } else {
-      ipc.send('get', JSON.stringify({key: param.key}))
-      
+      ipc.send('get', JSON.stringify({key: param.key})) 
     }
   }
 
@@ -172,6 +170,11 @@ export default class App extends React.Component {
             value={this.state.input.key}
             onChange={e => this.onChange('key', e)} 
           />
+          {/*<div style={{
+            display: 'block', 
+            position: 'absolute',
+            backgroundColor: '#fafafa'
+          }}>lorem</div>*/}
 
           <Input 
             value={this.state.input.value} 
@@ -215,7 +218,17 @@ export default class App extends React.Component {
               {...this.props} 
               namespace={this.props.getState().namespace} 
             />	
-            <Dropdown handleGradientClick={this.handleGradientClick} />
+            <Dropdown 
+              updatePathname={() => {
+                console.log("updatePathname()")
+                this.props.dispatch(
+                  actions.updatePathname({
+                    pathname: 'credentials'
+                  })
+                )
+              }}
+              handleGradientClick={this.handleGradientClick} 
+            />
           </div>
         </div>
     

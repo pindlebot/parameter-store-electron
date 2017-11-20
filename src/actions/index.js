@@ -11,6 +11,8 @@ export const DESTROY_NAMESPACE = 'DESTROY_NAMESPACE'
 export const CONFIG_ERROR = 'CONFIG_ERROR'
 export const UPDATE_CONFIG = 'UPDATE_CONFIG'
 
+export const UPDATE_PATHNAME = 'UPDATE_PATHNAME'
+
 export function addParameter(parameter) {
   return {
     type: ADD_PARAMETER,
@@ -85,4 +87,9 @@ export function configError(error) {
 export const updateConfig = (credentials) => ({
   type: UPDATE_CONFIG,
   credentials
+})
+
+export const updatePathname = (pathname) => ({
+  type: UPDATE_PATHNAME,
+  pathname,
 })

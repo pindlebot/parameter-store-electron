@@ -1,7 +1,7 @@
 {
   "name": "parameter-store",
   "productName": "Parameter Store",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -50,12 +50,13 @@
   "dependencies": {
     "app": "^0.1.0",
     "aws-sdk": "^2.149.0",
-    "base-64": "^0.1.0",
     "debounce": "^1.1.0",
     "electron-compile": "^6.4.2",
     "electron-default-menu": "^1.0.1",
     "electron-devtools-installer": "^2.1.0",
     "electron-squirrel-startup": "^1.0.0",
+    "jss": "^9.3.3",
+    "jss-preset-default": "^4.0.1",
     "lodash.findindex": "^4.6.0",
     "lodash.get": "^4.4.2",
     "menubar": "^5.2.3",
@@ -63,9 +64,9 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-jss": "^8.1.0",
     "react-select": "^1.0.0-rc.10",
     "redux": "^3.7.2",
-    "utf8": "^2.1.2",
     "util.promisify": "^1.0.0"
   },
   "devDependencies": {

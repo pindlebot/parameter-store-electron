@@ -25,10 +25,8 @@ const styles = {
     width: 'auto',
     overflow: 'auto',
     boxShadow: '0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)',
-    //translateY(-2px),
     transitionProperty: 'color,background-color,box-shadow,transform',
     transitionDuration: '.15s',
-    //boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.2)',
     zIndex: '1',
     borderRadius: '3px'
   },
@@ -62,7 +60,8 @@ class Dropdown extends React.Component {
   render() {
     const { show } = this.state;
     const {
-      handleGradientClick
+      handleGradientClick,
+      updatePathname
     } = this.props;
     return(
       <div style={styles.dropdown}>
@@ -76,6 +75,12 @@ class Dropdown extends React.Component {
               ...styles.dropdownContent,
               display: show ? 'block' : 'none'
             }}>
+            <div 
+            style={{
+              padding: '8px 10px', 
+              color: '#555',
+              cursor: 'pointer'
+          }} onClick={updatePathname}>Credentials</div>
             <div style={{
               display: 'flex', 
               flexDirection: 'row', 
@@ -83,6 +88,7 @@ class Dropdown extends React.Component {
               alignItems:'center',
               padding: '8px 10px',
             }}>
+           
             {gradients.map((g, i) => 
               <div style={{
                 height: '30px',
@@ -96,6 +102,7 @@ class Dropdown extends React.Component {
               ></div>
             )}
             </div>
+            
           </div>
       </div>
     )

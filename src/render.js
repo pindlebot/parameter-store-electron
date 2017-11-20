@@ -7,7 +7,8 @@ import {
   REVEAL_VALUE, 
   SET_PARAMETERS, 
   SET_NAMESPACES,
-  CONFIG_ERROR 
+  CONFIG_ERROR, 
+  UPDATE_PATHNAME
 } from './actions/index';
 
 const initialState = {
@@ -78,6 +79,13 @@ ipc.on('error', (event, args) => {
   })
 })
 
+ipc.on('pathname', (event, args) => {
+  store.dispatch({
+    type: UPDATE_PATHNAME,
+    error: JSON.parse(args)
+  })
+})
+
 ipc.on('init', (event, args) => {
 
   console.log(args)
@@ -87,7 +95,7 @@ ipc.on('init', (event, args) => {
       arg.key.split('/').length > 0
     ).map(arg => 
       arg.key.split('/')[1]
-    ).filter(arg => typeof arg !== 'undefined')
+    ).filter(arg => typeof arg !== 'undefined' && arg !== '')
   )]
 
   namespaces.push('All')
@@ -100,5 +108,15 @@ ipc.on('init', (event, args) => {
   store.dispatch({
     type: SET_NAMESPACES,
     namespaces: namespaces.map(n => ({label: n, value: n}))
+  })
+
+  store.dispatch({
+    type: CONFIG_ERROR,
+    error: false
+  })
+
+  store.dispatch({
+    type: UPDATE_PATHNAME,
+    pathname: ''
   })
 })
